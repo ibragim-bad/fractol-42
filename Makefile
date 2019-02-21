@@ -1,7 +1,7 @@
 NAME = fractol
 SRC = ./src/main.c ./src/mandelbrot.c ./src/keys.c
 SRC2 = ./libft/libft.a
-OBJECTS = main.o
+OBJECTS = main.o keys.o mandelbrot.o
 FLAGS = -Wall -Wextra -Werror
 FLAGS2 = -Iincludes/ -I /usr/local/include -L /usr/local/lib -lmlx -lpthread -framework OpenGL -framework AppKit
 FLAGS_LINUX = -I ./includes_linux/ /usr/X11/lib/libmlx.a  -lXext -lX11 -lm -lpthread

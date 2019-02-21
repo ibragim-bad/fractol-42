@@ -1,38 +1,56 @@
-#include "../include/fractol.h"
+#include "../includes/fractol.h"
 
-
-int		ft_mlx(t_fract *f)
+int		ft_error(int c, t_fract *f)
 {
-	if (f->img.img_ptr)
-		mlx_destroy_image(f->mlx, f->img.img_ptr);
-	if (!(f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE)))
-		return (-1);
-	ft_mndb(f);
+	if (c == 1)
+	{
+		write(1, "usage: fractal name\n", 20);
+		exit(0);
+	}
+	free(f);
 	return (0);
 }
 
-int		ft_init (char *av, t_fract *f)
+int ft_mlx(t_fract *f)
+{
+	/*	if (f->img.img_ptr)
+		mlx_destroy_image(f->mlx, f->img.img_ptr);*/
+	if (!(f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE)))
+		return (-1);
+	if (f->type == 0)
+	{
+		ft_init_mndb(f);
+		//	ft_mndb(f);
+		ft_mb_pthread(f);
+	}
+	return (0);
+}
+
+int ft_init(char *av, t_fract *f)
 {
 	if (!(f = (t_fract *)malloc(sizeof(t_fract))))
-		return(-1);
+		return (-1);
 	f->img.img_ptr = NULL;
 	f->win = NULL;
 	f->mlx = NULL;
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WINSIZE, WINSIZE, "fractol");
-	if (av[0] == 's')
-		return (-1);
+	f->type = -1;
+	if (ft_strequ(av, "mandelbrot"))
+		f->type = 0;
+	if (f->type == -1)
+		ft_error(1, f);
 	ft_mlx(f);
-	mlx_key_hook(f->win, ft_key, (void *)f);
-//	mlx_mouse_hook(f->win, ft_mouse, (void *)f);
+	mlx_hook(f->win, 2, 5, ft_key, f);
+	//	mlx_hook(f->win, 6, 5, ft_mouse, f);
+	mlx_hook(f->win, 17, 0, finish, f);
 	mlx_loop(f->mlx);
 	return (0);
 }
 
-
-int		main(int ac, char *av[])
+int main(int ac, char *av[])
 {
-	t_fract	*f;
+	t_fract *f;
 
 	f = NULL;
 	if (ac == 2)

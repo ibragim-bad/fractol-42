@@ -1,4 +1,4 @@
-#include "../include/fractol.h"
+#include "../includes/fractol.h"
 
 int		ft_putter(t_fract *f)
 {
@@ -65,8 +65,31 @@ int		ft_mndb(t_fract *f)
 		return (-1);
 	f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
 			&f->img.size_l, &f->img.endian);
-	ft_init_mndb(f);
 	mandelbrot(f);
 	mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
 	return (0);
+}
+
+void	ft_mb_pthread(t_fract *f)
+{
+	pthread_t	thread[THREADS];
+	t_fract		fract[THREADS];
+	int			i;
+
+	f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE);
+	f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
+			&f->img.size_l, &f->img.endian);
+	i = 0;
+	while (i < THREADS)
+	{
+		ft_memcpy((void *)(&fract[i]), (void *)f, sizeof(t_fract));
+		fract[i].y = THREAD_HEIGHT * i;
+		fract[i].y_max = THREAD_HEIGHT * (i + 1);
+		if (pthread_create(&thread[i], NULL, mandelbrot, &fract[i]) != 0)
+			exit(0);
+		i++;
+	}
+	while (i--)
+		pthread_join(thread[i], NULL);
+	mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
 }
