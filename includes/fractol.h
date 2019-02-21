@@ -26,6 +26,13 @@
 # define THREADS 4
 # define THREAD_HEIGHT (WINSIZE / THREADS)
 
+typedef struct	s_point
+{
+	int			x;
+	int			y;
+}				t_point;
+
+
 typedef struct	s_img
 {
 	void		*img_ptr;
