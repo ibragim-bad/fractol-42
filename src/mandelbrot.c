@@ -1,4 +1,4 @@
-#include "../includes/fractol.h"
+#include "fractol.h"
 
 int		ft_putter(t_fract *f)
 {

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fractol.h"
+#include "fractol.h"
 
-void init_low(t_delta *new, int *yi, t_line *l)
+/*void init_low(t_delta *new, int *yi, t_line *l)
 {
 	new->dx = l->end->x - l->start->x;
 	new->dy = l->end->y - l->start->y;
@@ -54,7 +54,7 @@ int put_line_low(t_line *l, t_fdf *fdf)
 	return (0);
 }
 
-void init_high(t_delta *new, int *xi, t_line *l)
+ void init_high(t_delta *new, int *xi, t_line *l)
 {
 	new->dx = l->end->x - l->start->x;
 	new->dy = l->end->y - l->start->y;
@@ -68,33 +68,36 @@ void init_high(t_delta *new, int *xi, t_line *l)
 	new->x = l->start->x;
 	new->y = l->start->y;
 }
+ */
 
-int put_line_high(t_point *a, t_point *b, t_fract *f)
+
+
+/* int put_line_high(t_point *a, t_point *b, t_fract *f)
 {
 	int dx;
 	int dy;
 
   dx = b->x - a->x;
   dy = b->y - a->y;
-  int xi = 1
+  int xi = 1;
   if (dx < 0)
   {
-    xi = -1
-    dx = -dx
+    xi = -1;
+    dx = -dx;
   }
-  int D = 2*dx - dy
-  int x = x0
+  int D = 2*dx - dy;
+  int x = x0;
   int y = a->y;
   while (y++ < b->y)
    {
-	   fdf->img.data[new.y *WIN_WIDTH + new.x] =
-				get_color(point, l->start, l->end);
+	   f->img.data[y *WIN_WIDTH + x] =
+				0x0fffff;
     if (D > 0)
 	{
-       x = x + xi
-       D = D - 2*dy
+       x = x + xi;
+       D = D - 2*dy;
     }
-    D = D + 2*dx
+    D = D + 2*dx;
    }
 	return (0);
 }
@@ -117,5 +120,36 @@ int put_line(t_point *a, t_point *b, t_fract *f)
 			swap_points(l);
 		ret = put_line_high(l, fdf);
 		return (ret);
+	}
+} */
+
+
+void drawline(int x0, int y0, int x1, int y1, t_fract *f)
+{
+    int dx, dy, p, x, y;
+ 
+	dx=x1-x0;
+	dy=y1-y0;
+ 
+	x=x0;
+	y=y0;
+ 
+	p=2*dy-dx;
+	while(x<x1)
+	{
+		if(p>=0 && x > 0 && y > 0 && x < WINSIZE && y < WINSIZE)
+		{
+			f->img.data[y * WINSIZE + x] =
+				f->color;
+			y=y+1;
+			p=p+2*dy-2*dx;
+		}
+		else if ( x > 0 && y > 0 && x < WINSIZE && y < WINSIZE) 
+		{
+				f->img.data[y *WINSIZE + x] =
+				f->color;
+			p=p+2*dy;
+		}
+		x=x+1;
 	}
 }

@@ -1,4 +1,4 @@
-#include "../includes/fractol.h"
+#include "fractol.h"
 
 int		ft_error(int c, t_fract *f)
 {
@@ -23,6 +23,11 @@ int ft_mlx(t_fract *f)
 		//	ft_mndb(f);
 		ft_mb_pthread(f);
 	}
+	if (f->type == 1)
+	{
+		ft_init_srp(f);
+		ft_srp_pthread(f);
+	}
 	return (0);
 }
 
@@ -36,8 +41,11 @@ int ft_init(char *av, t_fract *f)
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WINSIZE, WINSIZE, "fractol");
 	f->type = -1;
+	f->init = 1;
 	if (ft_strequ(av, "mandelbrot"))
 		f->type = 0;
+	else if (ft_strequ(av, "sierp"))
+		f->type = 1;
 	if (f->type == -1)
 		ft_error(1, f);
 	ft_mlx(f);

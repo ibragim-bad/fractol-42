@@ -10,7 +10,7 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 800
-# define WINSIZE 850
+# define WINSIZE 600
 # define ITERNUM 20
 # define KEY_UP 0xff52
 # define KEY_DOWN 0xff54
@@ -19,11 +19,20 @@
 # define KEY_PLUS 0xffab
 # define KEY_MINUS 0xffad
 # define KEY_ESCAPE 0xff1b
+# define KEY_I 65438
 # define MOUSE_LB 1
 # define MOUSE_RB 3
 # define MOUSE_SB 2
 # define THREADS 4
 # define THREAD_HEIGHT (WINSIZE / THREADS)
+
+
+typedef struct	s_point
+{
+	int			x;
+	int			y;
+}				t_point;
+
 
 typedef struct	s_img
 {
@@ -58,7 +67,9 @@ typedef struct	s_fract
 	int			iternum;
 	int			inverter;
 	int			black;
-	int			noinit;
+	int			init;
+	int			type;
+	int			level;
 }               t_fract;
 
 int		ft_putter(t_fract *f);
@@ -68,5 +79,10 @@ int		ft_mndb(t_fract *f);
 int     ft_key(int key, t_fract *f);
 int		ft_mlx(t_fract *f);
 int		ft_mouse(int button, int x, int y, void *f);
+int		finish(t_fract *f);
+void	ft_mb_pthread(t_fract *f);
+void drawline(int x0, int y0, int x1, int y1, t_fract *f);
+void ft_srp_pthread(t_fract *f);
+int ft_init_srp(t_fract *f);
 
 #endif
