@@ -20,8 +20,10 @@ void zoom(int button, int x, int y, t_fract *f)
 
 int jl_moves(int x, int y, t_fract  *f)
 {
-	f->c_r = x;
-	f->c_i = y;
+	if (abs(f->c_r - x) > 5)
+		f->c_r = x;
+	if (abs(f->c_i - y) > 5)
+		f->c_i = y;
 	return (0);
 }
 

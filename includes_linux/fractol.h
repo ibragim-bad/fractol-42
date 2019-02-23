@@ -25,7 +25,7 @@
 # define MOUSE_LB 1
 # define MOUSE_RB 3
 # define MOUSE_SB 2
-# define THREADS 4
+# define THREADS 32
 # define THREAD_HEIGHT (WINSIZE / THREADS)
 
 
