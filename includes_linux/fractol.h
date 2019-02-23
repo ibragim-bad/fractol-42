@@ -20,6 +20,8 @@
 # define KEY_MINUS 0xffad
 # define KEY_ESCAPE 0xff1b
 # define KEY_I 65438
+# define KEY_1 65436
+# define KEY_3 65433
 # define MOUSE_LB 1
 # define MOUSE_RB 3
 # define MOUSE_SB 2
@@ -70,6 +72,7 @@ typedef struct	s_fract
 	int			init;
 	int			type;
 	int			level;
+	int			jl_moves;
 }               t_fract;
 
 int		ft_putter(t_fract *f);
@@ -78,11 +81,14 @@ int		ft_init_mndb(t_fract *f);
 int		ft_mndb(t_fract *f);
 int     ft_key(int key, t_fract *f);
 int		ft_mlx(t_fract *f);
-int		ft_mouse(int button, int x, int y, void *f);
 int		finish(t_fract *f);
 void	ft_mb_pthread(t_fract *f);
 void drawline(int x0, int y0, int x1, int y1, t_fract *f);
 void ft_srp_pthread(t_fract *f);
 int ft_init_srp(t_fract *f);
+int ft_mouse(int button, int x, int y, t_fract *f);
+void	ft_j_pthread(t_fract *f);
+int		ft_init_jl(t_fract *f);
+int	ft_jl_moves(int x, int y, t_fract *f);
 
 #endif

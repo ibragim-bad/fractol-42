@@ -13,9 +13,9 @@ t_point *new_point(int x, int y, t_fract *f)
 
 void put_triangle(t_point *t, t_point *r, t_point *l, t_fract *f)
 {
-	drawline(l->x * f->zoom  + f->xx, l->y  * f->zoom+ f->yy, t->x*f->zoom  + f->xx, t->y *f->zoom+ f->yy, f);
-	drawline(l->x * f->zoom  + f->xx, l->y  * f->zoom+ f->yy, r->x*f->zoom + f->xx, r->y * f->zoom + f->yy, f);
-	drawline(t->x  * f->zoom  + f->xx, t->y  * f->zoom+ f->yy, r->x *f->zoom + f->xx, r->y *f->zoom + f->yy, f);
+	drawline(l->x * f->zoom + f->xx, l->y * f->zoom + f->yy, t->x * f->zoom + f->xx, t->y * f->zoom + f->yy, f);
+	drawline(l->x * f->zoom + f->xx, l->y * f->zoom + f->yy, r->x * f->zoom + f->xx, r->y * f->zoom + f->yy, f);
+	drawline(t->x * f->zoom + f->xx, t->y * f->zoom + f->yy, r->x * f->zoom + f->xx, r->y * f->zoom + f->yy, f);
 	/* 	free(t);
 	free(r);
 	free(l); */
@@ -62,16 +62,16 @@ void DrawTriangle(int level,
 
 int ft_init_srp(t_fract *f)
 {
-	f->y = 0;
-	f->x = 0;
-	f->inverter = 1;
-	f->black = 1;
-	f->iternum = ITERNUM;
-	f->y_max = WINSIZE;
-	f->inverter = 1;
-	f->black = 1;
 	if (f->init)
 	{
+		f->y = 0;
+		f->x = 0;
+		f->inverter = 1;
+		f->black = 1;
+		f->iternum = ITERNUM;
+		f->y_max = WINSIZE;
+		f->inverter = 1;
+		f->black = 1;
 		f->color = 0xC8FFFD;
 		f->level = 10;
 		f->zoom = 1;

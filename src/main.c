@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-int		ft_error(int c, t_fract *f)
+int ft_error(int c, t_fract *f)
 {
 	if (c == 1)
 	{
@@ -20,13 +20,17 @@ int ft_mlx(t_fract *f)
 	if (f->type == 0)
 	{
 		ft_init_mndb(f);
-		//	ft_mndb(f);
 		ft_mb_pthread(f);
 	}
 	if (f->type == 1)
 	{
 		ft_init_srp(f);
 		ft_srp_pthread(f);
+	}
+	if (f->type == 2)
+	{
+		ft_init_jl(f);
+		ft_j_pthread(f);
 	}
 	return (0);
 }
@@ -46,11 +50,15 @@ int ft_init(char *av, t_fract *f)
 		f->type = 0;
 	else if (ft_strequ(av, "sierp"))
 		f->type = 1;
+	else if (ft_strequ(av, "julia"))
+		f->type = 2;
 	if (f->type == -1)
 		ft_error(1, f);
 	ft_mlx(f);
 	mlx_hook(f->win, 2, 5, ft_key, f);
-	//	mlx_hook(f->win, 6, 5, ft_mouse, f);
+	/*  	mlx_mouse_hook(f->win, ft_mouse, f);  */
+	mlx_hook(f->win, 4, 5, ft_mouse, f);
+	mlx_hook(f->win, 6, (1L<<6), ft_jl_moves, f);
 	mlx_hook(f->win, 17, 0, finish, f);
 	mlx_loop(f->mlx);
 	return (0);

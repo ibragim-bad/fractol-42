@@ -58,7 +58,7 @@ int		ft_init_mndb(t_fract *f)
 	f->black = 1;
 	return (0);
 }
-
+/* 
 int		ft_mndb(t_fract *f)
 {
 	if (!(f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE)))
@@ -69,7 +69,7 @@ int		ft_mndb(t_fract *f)
 	mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
 	return (0);
 }
-
+ */
 void	ft_mb_pthread(t_fract *f)
 {
 	pthread_t	thread[THREADS];
