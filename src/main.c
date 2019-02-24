@@ -1,5 +1,6 @@
 #include "fractol.h"
 
+
 int ft_error(int c, t_fract *f)
 {
 	if (c == 1)
@@ -13,10 +14,12 @@ int ft_error(int c, t_fract *f)
 
 int ft_mlx(t_fract *f)
 {
-	/*	if (f->img.img_ptr)
-		mlx_destroy_image(f->mlx, f->img.img_ptr);*/
+	if (f->img.img_ptr)
+		mlx_destroy_image(f->mlx, f->img.img_ptr);
 	if (!(f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE)))
 		return (-1);
+	f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
+			&f->img.size_l, &f->img.endian);
 	if (f->type == 0)
 	{
 		ft_init_mndb(f);
@@ -24,8 +27,8 @@ int ft_mlx(t_fract *f)
 	}
 	if (f->type == 1)
 	{
-		ft_init_srp(f);
-		sierp(f);
+		ft_init_duck(f);
+		ft_duck_pthread(f);
 	}
 	if (f->type == 2)
 	{
@@ -46,7 +49,7 @@ int ft_init(char *av, t_fract *f)
 	f->init = 1;
 	if (ft_strequ(av, "mandelbrot"))
 		f->type = 0;
-	else if (ft_strequ(av, "sierp"))
+	else if (ft_strequ(av, "duck"))
 		f->type = 1;
 	else if (ft_strequ(av, "julia"))
 		f->type = 2;

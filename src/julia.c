@@ -74,9 +74,9 @@ void ft_j_pthread(t_fract *f)
     int i;
 
 
-    f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE);
+/*     f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE);
     f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
-                                           &f->img.size_l, &f->img.endian);
+                                           &f->img.size_l, &f->img.endian); */
     i = 0;
     while (i < THREADS)
     {

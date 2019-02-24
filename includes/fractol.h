@@ -20,11 +20,15 @@
 # define KEY_MINUS 78
 # define KEY_ESCAPE 53
 # define KEY_I	34
+# define KEY_1 83
+# define KEY_3 85
 # define MOUSE_LB 1
 # define MOUSE_RB 2
 # define MOUSE_SB 3
 # define THREADS 4
 # define THREAD_HEIGHT (WINSIZE / THREADS)
+
+
 
 typedef struct	s_point
 {
@@ -66,8 +70,10 @@ typedef struct	s_fract
 	int			iternum;
 	int			inverter;
 	int			black;
-	int			noinit;
+	int			init;
 	int			type;
+	int			level;
+	int			jl_moves;
 }               t_fract;
 
 int		ft_putter(t_fract *f);
@@ -76,8 +82,17 @@ int		ft_init_mndb(t_fract *f);
 int		ft_mndb(t_fract *f);
 int     ft_key(int key, t_fract *f);
 int		ft_mlx(t_fract *f);
-int		ft_mouse(int button, int x, int y, void *f);
 int		finish(t_fract *f);
 void	ft_mb_pthread(t_fract *f);
+/* void drawline(int x0, int y0, int x1, int y1, t_fract *f);
+void ft_srp_pthread(t_fract *f);
+int ft_init_srp(t_fract *f); */
+int ft_mouse(int button, int x, int y, t_fract *f);
+void	ft_j_pthread(t_fract *f);
+int		ft_init_jl(t_fract *f);
+int	ft_jl_moves(int x, int y, t_fract *f);
+/* void *sierp(void *fr); */
+int		ft_init_duck(t_fract *f);
+void	ft_duck_pthread(t_fract *f);
 
 #endif

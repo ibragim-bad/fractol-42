@@ -20,15 +20,16 @@ void zoom(int button, int x, int y, t_fract *f)
 
 int jl_moves(int x, int y, t_fract  *f)
 {
-	if (abs(f->c_r - x) > 5)
+	if (fabs(f->c_r - x) > 5)
 		f->c_r = x;
-	if (abs(f->c_i - y) > 5)
+	if (fabs(f->c_i - y) > 5)
 		f->c_i = y;
 	return (0);
 }
 
 int	ft_jl_moves(int x, int y, t_fract *f)
 {
+/* 	mlx_destroy_image(f->mlx, f->img.img_ptr); */
 	if (f->jl_moves == 1)
 		jl_moves(x, y, f);
 	ft_mlx(f);
@@ -37,6 +38,7 @@ int	ft_jl_moves(int x, int y, t_fract *f)
 
 int ft_mouse(int button, int x, int y, t_fract *f)
 {
+	/* mlx_destroy_image(f->mlx, f->img.img_ptr); */
 	f->init = 0;
 	if (button == 4 || button == 5)
 		zoom(button, x, y, f);
@@ -50,8 +52,9 @@ int ft_mouse(int button, int x, int y, t_fract *f)
 
 int finish(t_fract *f)
 {
-	mlx_destroy_image(f->mlx, f->img.img_ptr);
+	/* mlx_destroy_image(f->mlx, f->img.img_ptr); */
 	mlx_destroy_window(f->mlx, f->win);
+	free(f);
 	exit(0);
 	return (0);
 }
@@ -68,7 +71,7 @@ int psychodel(t_fract *f)
 
 int ft_key(int key, t_fract *f)
 {
-	mlx_destroy_image(f->mlx, f->img.img_ptr);
+/* 	mlx_destroy_image(f->mlx, f->img.img_ptr); */
 	f->init = 0;
 	if (key == KEY_PLUS && f->type == 0)
 		f->zoom += 50;
