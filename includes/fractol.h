@@ -10,7 +10,7 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 800
-# define WINSIZE 850
+# define WINSIZE 1200
 # define ITERNUM 20
 # define KEY_UP 126
 # define KEY_DOWN 125
@@ -25,7 +25,7 @@
 # define MOUSE_LB 1
 # define MOUSE_RB 2
 # define MOUSE_SB 3
-# define THREADS 4
+# define THREADS 32
 # define THREAD_HEIGHT (WINSIZE / THREADS)
 
 
