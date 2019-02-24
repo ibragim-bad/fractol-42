@@ -10,7 +10,7 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 800
-# define WINSIZE 600
+# define WINSIZE 800
 # define ITERNUM 20
 # define KEY_UP 0xff52
 # define KEY_DOWN 0xff54
@@ -25,7 +25,7 @@
 # define MOUSE_LB 1
 # define MOUSE_RB 3
 # define MOUSE_SB 2
-# define THREADS 32
+# define THREADS 16
 # define THREAD_HEIGHT (WINSIZE / THREADS)
 
 
@@ -90,5 +90,6 @@ int ft_mouse(int button, int x, int y, t_fract *f);
 void	ft_j_pthread(t_fract *f);
 int		ft_init_jl(t_fract *f);
 int	ft_jl_moves(int x, int y, t_fract *f);
+void *sierp(void *fr);
 
 #endif

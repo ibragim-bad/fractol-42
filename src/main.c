@@ -25,7 +25,7 @@ int ft_mlx(t_fract *f)
 	if (f->type == 1)
 	{
 		ft_init_srp(f);
-		ft_srp_pthread(f);
+		sierp(f);
 	}
 	if (f->type == 2)
 	{
@@ -37,8 +37,6 @@ int ft_mlx(t_fract *f)
 
 int ft_init(char *av, t_fract *f)
 {
-	if (!(f = (t_fract *)malloc(sizeof(t_fract))))
-		return (-1);
 	f->img.img_ptr = NULL;
 	f->win = NULL;
 	f->mlx = NULL;
@@ -69,6 +67,8 @@ int main(int ac, char *av[])
 	t_fract *f;
 
 	f = NULL;
+	if (!(f = (t_fract *)malloc(sizeof(t_fract))))
+		return (-1);
 	if (ac == 2)
 		ft_init(av[1], f);
 	else

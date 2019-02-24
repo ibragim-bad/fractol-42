@@ -16,9 +16,9 @@ void put_triangle(t_point *t, t_point *r, t_point *l, t_fract *f)
 	drawline(l->x * f->zoom + f->xx, l->y * f->zoom + f->yy, t->x * f->zoom + f->xx, t->y * f->zoom + f->yy, f);
 	drawline(l->x * f->zoom + f->xx, l->y * f->zoom + f->yy, r->x * f->zoom + f->xx, r->y * f->zoom + f->yy, f);
 	drawline(t->x * f->zoom + f->xx, t->y * f->zoom + f->yy, r->x * f->zoom + f->xx, r->y * f->zoom + f->yy, f);
-	/* 	free(t);
+/*  	free(t);
 	free(r);
-	free(l); */
+	free(l);   */
 }
 
 void DrawTriangle(int level,
@@ -28,9 +28,9 @@ void DrawTriangle(int level,
 	t_point *r_mid;
 	t_point *b_mid;
 
-	l_mid = (t_point *)malloc(sizeof(t_point));
+/*  	l_mid = (t_point *)malloc(sizeof(t_point));
 	r_mid = (t_point *)malloc(sizeof(t_point));
-	b_mid = (t_point *)malloc(sizeof(t_point));
+	b_mid = (t_point *)malloc(sizeof(t_point));  */
 	// See if we should stop.
 	if (level == 0)
 	{
@@ -89,6 +89,9 @@ void *sierp(void *fr)
 	t_fract *f;
 
 	f = fr;
+	f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE);
+	f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
+										   &f->img.size_l, &f->img.endian);
 	l = (t_point *)malloc(sizeof(t_point));
 	r = (t_point *)malloc(sizeof(t_point));
 	t = (t_point *)malloc(sizeof(t_point));
@@ -96,9 +99,10 @@ void *sierp(void *fr)
 	r = new_point(WINSIZE, WINSIZE, f);
 	t = new_point(WINSIZE / 2, 0, f);
 	DrawTriangle(f->level, t, r, l, f);
+	mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
 	return (0);
 }
-
+/* 
 void ft_srp_pthread(t_fract *f)
 {
 	pthread_t thread[THREADS];
@@ -121,4 +125,4 @@ void ft_srp_pthread(t_fract *f)
 	while (i--)
 		pthread_join(thread[i], NULL);
 	mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
-}
+} */

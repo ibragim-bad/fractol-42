@@ -70,9 +70,9 @@ int ft_key(int key, t_fract *f)
 {
 	mlx_destroy_image(f->mlx, f->img.img_ptr);
 	f->init = 0;
-	if (key == KEY_PLUS)
+	if (key == KEY_PLUS && f->type == 0)
 		f->zoom += 50;
-	else if (key == KEY_MINUS)
+	else if (key == KEY_MINUS && f->type == 0)
 		f->zoom -= 50;
 	if (key == KEY_PLUS && f->type == 1)
 	{
