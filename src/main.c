@@ -1,17 +1,5 @@
 #include "fractol.h"
 
-int ft_error(int c, t_fract *f)
-{
-	if (c == 1)
-	{
-		write(1, "usage: fractal name\n", 20);
-		write(1, "\tmandelbrot/julia/duck/random\n", 30);
-		exit(0);
-	}
-	free(f);
-	return (0);
-}
-
 int ft_mlx(t_fract *f)
 {
 	if (f->img.img_ptr)
@@ -31,15 +19,8 @@ int ft_mlx(t_fract *f)
 	return (0);
 }
 
-int ft_init(char *av, t_fract *f)
+int ft_check_type(char *av, t_fract *f)
 {
-	f->img.img_ptr = NULL;
-	f->win = NULL;
-	f->mlx = NULL;
-	f->mlx = mlx_init();
-	f->win = mlx_new_window(f->mlx, WINSIZE, WINSIZE, "fractol");
-	f->type = -1;
-	f->init = 1;
 	if (ft_strequ(av, "mandelbrot"))
 		f->type = 0;
 	else if (ft_strequ(av, "duck"))
@@ -50,6 +31,19 @@ int ft_init(char *av, t_fract *f)
 		f->type = 3;
 	if (f->type == -1)
 		ft_error(1, f);
+	return (0);
+}
+
+int ft_init(char *av, t_fract *f)
+{
+	f->img.img_ptr = NULL;
+	f->win = NULL;
+	f->mlx = NULL;
+	f->mlx = mlx_init();
+	f->win = mlx_new_window(f->mlx, WINSIZE, WINSIZE, "fractol");
+	f->type = -1;
+	f->init = 1;
+	ft_check_type(av, f);
 	ft_mlx(f);
 	mlx_hook(f->win, 2, 5, ft_key, f);
 	mlx_hook(f->win, 4, 5, ft_mouse, f);

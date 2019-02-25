@@ -13,9 +13,9 @@ int ft_putter_jul(t_fract *f)
 		f->a_i = 1.0 * (f->b_i + f->c_i / WINSIZE);
 		f->i++;
 	}
-	if (f->i == f->iternum && f->x < WINSIZE && f->y < WINSIZE)
+	if (f->i == f->iternum)
 		f->img.data[f->y * WINSIZE + f->x] = 0x000000;
-	else if (f->x < WINSIZE && f->y < WINSIZE)
+	else
 		f->img.data[f->y * WINSIZE + f->x] = f->color * f->i;
 	return (0);
 }
@@ -46,12 +46,10 @@ int ft_init_jl(t_fract *f)
 		f->xx = -2;
 		f->yy = -2;
 		f->color = 0xC8FFFD;
-		f->c_r = 105;
+		f->c_r =  105;
 		f->c_i = 116;
 		f->zoom = WINSIZE / 4;
-		f->iternum = ITERNUM;
-		f->inverter = 1;
-		f->black = 1;
+		f->iternum = 50;
 	}
 	ft_j_pthread(f);
 	return (0);
