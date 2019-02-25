@@ -1,7 +1,6 @@
 #include "fractol.h"
 
-
-int		ft_ducker(t_fract *f)
+int ft_ducker(t_fract *f)
 {
 	f->c_r = 1.0 * f->x / f->zoom + f->xx;
 	f->c_i = 1.0 * f->y / f->zoom + f->yy;
@@ -19,13 +18,13 @@ int		ft_ducker(t_fract *f)
 	if (f->i == f->iternum)
 		f->img.data[f->y * WINSIZE + f->x] = 0x000000;
 	else
-		f->img.data[f->y * WINSIZE + f->x] = f->color * f->i;
+		f->img.data[f->y * WINSIZE + f->x] = f->color * (f->i);
 	return (0);
 }
 
-void	*ft_duck(void *fr)
+void *ft_duck(void *fr)
 {
-	t_fract	*f;
+	t_fract *f;
 
 	f = fr;
 	while (f->y < f->y_max)
@@ -41,45 +40,29 @@ void	*ft_duck(void *fr)
 	return (f);
 }
 
-int		ft_init_duck(t_fract *f)
+int ft_init_duck(t_fract *f)
 {
-	f->y = 0;
-	f->x = 0;
-	if (f->zoom)
-        return (0);
-    f->zoom = WINSIZE / 3;
-	f->xx = -2.05;
-	f->yy = -1.3;
-	f->color = 0xC8FFFD;
-	f->inverter = 1;
-	f->black = 1;
-	f->iternum = ITERNUM;
-	f->y_max = WINSIZE;
-	f->inverter = 1;
-	f->black = 1;
+	if (f->init)
+	{
+		f->y = 0;
+		f->x = 0;
+		f->zoom = WINSIZE / 3;
+		f->xx = -2.05;
+		f->yy = -1.3;
+		f->color = 0x9AD3DE;
+		f->iternum = ITERNUM;
+		f->y_max = WINSIZE;
+	}
+	ft_duck_pthread(f);
 	return (0);
 }
-/* 
-int		ft_mndb(t_fract *f)
-{
-	if (!(f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE)))
-		return (-1);
-	f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
-			&f->img.size_l, &f->img.endian);
-	mandelbrot(f);
-	mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
-	return (0);
-}
- */
-void	ft_duck_pthread(t_fract *f)
-{
-	pthread_t	thread[THREADS];
-	t_fract		fract[THREADS];
-	int			i;
 
-/* 	f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE);
-	f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
-			&f->img.size_l, &f->img.endian); */
+void ft_duck_pthread(t_fract *f)
+{
+	pthread_t thread[THREADS];
+	t_fract fract[THREADS];
+	int i;
+
 	i = 0;
 	while (i < THREADS)
 	{

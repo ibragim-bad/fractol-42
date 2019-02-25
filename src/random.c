@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-int ft_putter(t_fract *f)
+int ft_random_put(t_fract *f)
 {
 	f->c_r = 1.0 * f->x / f->zoom + f->xx;
 	f->c_i = 1.0 * f->y / f->zoom + f->yy;
@@ -10,19 +10,19 @@ int ft_putter(t_fract *f)
 	while (f->i < f->iternum && (f->a_r * f->a_r + f->a_i * f->a_i) < 4)
 	{
 		f->b_r = 1.0 * (f->a_r * f->a_r - f->a_i * f->a_i);
-		f->b_i = 2.0 * f->a_r * f->a_i;
-		f->a_r = 1.0 * (f->b_r + f->c_r);
+		f->b_i = 2.0 * (f->a_r * f->a_i);
+		f->a_r = 1.0 * fabs(f->b_r + f->c_r);
 		f->a_i = 1.0 * (f->b_i + f->c_i);
 		f->i++;
 	}
 	if (f->i == f->iternum)
 		f->img.data[f->y * WINSIZE + f->x] = 0x000000;
 	else
-		f->img.data[f->y * WINSIZE + f->x] = f->color * f->i;
+		f->img.data[f->y * WINSIZE + f->x] = f->color * (f->i);
 	return (0);
 }
 
-void *mandelbrot(void *fr)
+void *ft_random(void *fr)
 {
 	t_fract *f;
 
@@ -32,7 +32,7 @@ void *mandelbrot(void *fr)
 		f->x = 0;
 		while (f->x < WINSIZE)
 		{
-			ft_putter(f);
+			ft_random_put(f);
 			f->x++;
 		}
 		f->y++;
@@ -40,7 +40,7 @@ void *mandelbrot(void *fr)
 	return (f);
 }
 
-int ft_init_mndb(t_fract *f)
+int ft_init_random(t_fract *f)
 {
 	if (f->init)
 	{
@@ -49,15 +49,15 @@ int ft_init_mndb(t_fract *f)
 		f->zoom = WINSIZE / 3;
 		f->xx = -2.05;
 		f->yy = -1.3;
-		f->color = 0xC8FFFD;
+		f->color = 0x9AD3DE;
 		f->iternum = ITERNUM;
 		f->y_max = WINSIZE;
 	}
-	ft_mb_pthread(f);
+	ft_random_pthread(f);
 	return (0);
 }
 
-void ft_mb_pthread(t_fract *f)
+void ft_random_pthread(t_fract *f)
 {
 	pthread_t thread[THREADS];
 	t_fract fract[THREADS];
@@ -69,7 +69,7 @@ void ft_mb_pthread(t_fract *f)
 		ft_memcpy((void *)(&fract[i]), (void *)f, sizeof(t_fract));
 		fract[i].y = THREAD_HEIGHT * i;
 		fract[i].y_max = THREAD_HEIGHT * (i + 1);
-		if (pthread_create(&thread[i], NULL, mandelbrot, &fract[i]) != 0)
+		if (pthread_create(&thread[i], NULL, ft_random, &fract[i]) != 0)
 			exit(0);
 		i++;
 	}

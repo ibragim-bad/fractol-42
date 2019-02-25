@@ -4,8 +4,8 @@ void zoom(int button, int x, int y, t_fract *f)
 {
 	if (button == 4)
 	{
- 		f->xx = (x / f->zoom + f->xx) - (x / (f->zoom * 1.3));
-		f->yy = (y / f->zoom + f->yy) - (y / (f->zoom * 1.3)); 
+		f->xx = (x / f->zoom + f->xx) - (x / (f->zoom * 1.3));
+		f->yy = (y / f->zoom + f->yy) - (y / (f->zoom * 1.3));
 		f->zoom *= 1.3;
 		f->iternum++;
 	}
@@ -18,7 +18,7 @@ void zoom(int button, int x, int y, t_fract *f)
 	}
 }
 
-int jl_moves(int x, int y, t_fract  *f)
+/* int jl_moves(int x, int y, t_fract *f)
 {
 	if (fabs(f->c_r - x) > 5)
 		f->c_r = x;
@@ -26,25 +26,28 @@ int jl_moves(int x, int y, t_fract  *f)
 		f->c_i = y;
 	return (0);
 }
-
-int	ft_jl_moves(int x, int y, t_fract *f)
+ */
+int ft_jl_moves(int x, int y, t_fract *f)
 {
-/* 	mlx_destroy_image(f->mlx, f->img.img_ptr); */
 	if (f->jl_moves == 1)
-		jl_moves(x, y, f);
+	{
+		if (fabs(f->c_r - x) > 5)
+			f->c_r = x;
+		if (fabs(f->c_i - y) > 5)
+			f->c_i = y;
+	};
 	ft_mlx(f);
 	return (0);
 }
 
 int ft_mouse(int button, int x, int y, t_fract *f)
 {
-	/* mlx_destroy_image(f->mlx, f->img.img_ptr); */
 	f->init = 0;
 	if (button == 4 || button == 5)
 		zoom(button, x, y, f);
-/*  	if (button >= 1 && button <= 3)
+	/*  	if (button >= 1 && button <= 3)
 		f->jl_moves = (f->jl_moves == 1) ? 0 : 1;  */
-/* 	if (f->jl_moves == 1)
+	/* 	if (f->jl_moves == 1)
 		jl_moves(x, y, f); */
 	ft_mlx(f);
 	return (1);
@@ -52,7 +55,8 @@ int ft_mouse(int button, int x, int y, t_fract *f)
 
 int finish(t_fract *f)
 {
-	/* mlx_destroy_image(f->mlx, f->img.img_ptr); */
+	if (f->img.img_ptr)
+		mlx_destroy_image(f->mlx, f->img.img_ptr);
 	mlx_destroy_window(f->mlx, f->win);
 	free(f);
 	exit(0);
@@ -71,28 +75,11 @@ int psychodel(t_fract *f)
 
 int ft_key(int key, t_fract *f)
 {
-/* 	mlx_destroy_image(f->mlx, f->img.img_ptr); */
 	f->init = 0;
 	if (key == KEY_PLUS && f->type == 0)
 		f->zoom += 50;
 	else if (key == KEY_MINUS && f->type == 0)
 		f->zoom -= 50;
-	if (key == KEY_PLUS && f->type == 1)
-	{
-		f->zoom += 0.1;
-	 	if (f->zoom > 0.5)
-			f->level = 10;
- 		else if (f->zoom < 0.5)
-			f->level = 8;  
-	}
-	else if (key == KEY_MINUS && f->type == 1)
-	{
-		f->zoom -= 0.1;
- 		if (f->zoom > 0.5)
-			f->level = 10;
-		else if (f->zoom < 0.5)
-			f->level = 8; 
-	}
 	if (key == KEY_LEFT)
 		f->xx -= 30 / f->zoom;
 	else if (key == KEY_RIGHT)
@@ -101,20 +88,16 @@ int ft_key(int key, t_fract *f)
 		f->yy -= 30 / f->zoom;
 	else if (key == KEY_DOWN)
 		f->yy += 30 / f->zoom;
- 	if (key == KEY_3)
-		f->jl_moves = (f->jl_moves == 1) ? 0 : 1; 
- 	else if (key == KEY_PLUS)
-		f->iternum++;
-	else if (key == KEY_MINUS)
-		f->iternum--; 
+	if (key == KEY_3)
+		f->jl_moves = (f->jl_moves == 1) ? 0 : 1;
 	else if (key == KEY_1)
-		f->jl_moves = (f->jl_moves == 1 )? 0: 1;
+		f->jl_moves = (f->jl_moves == 1) ? 0 : 1;
 	else if (key == KEY_I)
 	{
 		psychodel(f);
 	}
 	else if (key == KEY_ESCAPE)
-		exit(0);
+		finish(f);
 	ft_mlx(f);
 	return (0);
 }

@@ -83,13 +83,17 @@ int     ft_key(int key, t_fract *f);
 int		ft_mlx(t_fract *f);
 int		finish(t_fract *f);
 void	ft_mb_pthread(t_fract *f);
-void drawline(int x0, int y0, int x1, int y1, t_fract *f);
+/* void drawline(int x0, int y0, int x1, int y1, t_fract *f);
 void ft_srp_pthread(t_fract *f);
-int ft_init_srp(t_fract *f);
+int ft_init_srp(t_fract *f); */
 int ft_mouse(int button, int x, int y, t_fract *f);
 void	ft_j_pthread(t_fract *f);
 int		ft_init_jl(t_fract *f);
 int	ft_jl_moves(int x, int y, t_fract *f);
-void *sierp(void *fr);
+/* void *sierp(void *fr); */
+int		ft_init_duck(t_fract *f);
+void	ft_duck_pthread(t_fract *f);
+void ft_random_pthread(t_fract *f);
+int ft_init_random(t_fract *f);
 
 #endif
