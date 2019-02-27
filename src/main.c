@@ -4,10 +4,11 @@ int ft_mlx(t_fract *f)
 {
 	if (f->img.img_ptr)
 		mlx_destroy_image(f->mlx, f->img.img_ptr);
-	if (!(f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE)))
+	if (!(f->img.img_ptr = mlx_new_image(f->mlx, WINSIZE, WINSIZE)) ||
+		(!(f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr,
+		&f->img.bpp,
+			&f->img.size_l, &f->img.endian))))
 		return (-1);
-	f->img.data = (int *)mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
-										   &f->img.size_l, &f->img.endian);
 	if (f->type == 0)
 		ft_init_mndb(f);
 	if (f->type == 1)
@@ -39,8 +40,9 @@ int ft_init(char *av, t_fract *f)
 	f->img.img_ptr = NULL;
 	f->win = NULL;
 	f->mlx = NULL;
-	f->mlx = mlx_init();
-	f->win = mlx_new_window(f->mlx, WINSIZE, WINSIZE, "fractol");
+	if (!(f->mlx = mlx_init()) ||
+		(!(f->win = mlx_new_window(f->mlx, WINSIZE, WINSIZE, "fractol"))))
+		return (-1);
 	f->type = -1;
 	f->init = 1;
 	ft_check_type(av, f);

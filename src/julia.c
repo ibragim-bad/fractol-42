@@ -49,7 +49,7 @@ int ft_init_jl(t_fract *f)
 		f->c_r =  105;
 		f->c_i = 116;
 		f->zoom = WINSIZE / 4;
-		f->iternum = 50;
+		f->iternum = 20;
 	}
 	ft_j_pthread(f);
 	return (0);

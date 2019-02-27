@@ -10,7 +10,7 @@
 
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 800
-#define WINSIZE 800
+#define WINSIZE 900
 #define ITERNUM 20
 #define KEY_UP 0xff52
 #define KEY_DOWN 0xff54
@@ -27,7 +27,7 @@
 #define MOUSE_LB 1
 #define MOUSE_RB 3
 #define MOUSE_SB 2
-#define THREADS 64
+#define THREADS 16
 #define THREAD_HEIGHT (WINSIZE / THREADS)
 
 typedef struct s_point
